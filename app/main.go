@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
-)
+	"os"
+	"strconv"
 
-const (
-	botToken = "1234567890:WWCo_arGTsf8gqWudtgCJ40y_wFrDTYuEeo" // Replace with your bot token
-	apiURL   = "https://api.telegram.org/bot" + botToken + "/sendMessage"
+	"github.com/joho/godotenv"
 )
 
 type TelegramMessage struct {
@@ -18,11 +18,27 @@ type TelegramMessage struct {
 }
 
 func main() {
-	chatID := int64(1234567890) // Replace with the actual chat ID
+	// Load .env
+	if err := godotenv.Load("../.env"); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
+	if botToken == "" {
+		log.Fatal("TELEGRAM_BOT_TOKEN is not set in .env")
+	}
+
+	chatIDStr := os.Getenv("TELEGRAM_CHAT_ID")
+	chatID, err := strconv.ParseInt(chatIDStr, 10, 64)
+	if err != nil {
+		log.Fatalf("Invalid TELEGRAM_CHAT_ID: %v", err)
+	}
+
+	apiURL := "https://api.telegram.org/bot" + botToken + "/sendMessage"
 
 	for i := 1; i <= 4; i++ {
 		message := fmt.Sprintf("Penipu blog #%d", i)
-		err := sendMessage(chatID, message)
+		err := sendMessage(apiURL, chatID, message)
 		if err != nil {
 			fmt.Printf("Error sending message '%s': %v\n", message, err)
 		} else {
@@ -31,7 +47,7 @@ func main() {
 	}
 }
 
-func sendMessage(chatID int64, text string) error {
+func sendMessage(apiURL string, chatID int64, text string) error {
 	msg := TelegramMessage{
 		ChatID: chatID,
 		Text:   text,

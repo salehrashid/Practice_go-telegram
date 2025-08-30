@@ -1,3 +1,5 @@
-module go-telegram
+module github.com/salehrashid/go-telegram
 
-go 1.21.5
+go 1.24.5
+
+require github.com/joho/godotenv v1.5.1

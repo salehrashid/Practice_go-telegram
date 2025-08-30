@@ -1,0 +1,33 @@
+services:
+  app_go_telegram:
+    build:
+      context: ./docker
+      dockerfile: app_telegram/Dockerfile
+    container_name: app_go_telegram
+    depends_on:
+      - wireguard
+    network_mode: "container:wireguard"
+    env_file:
+      - .env
+    volumes:
+      - .:/go/src/github.com/salehrashid/go-telegram
+
+  wireguard:
+    build:
+      context: .
+      dockerfile: docker/wireguard/Dockerfile
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./wg-config/wg-confs:/wg-config/wg-confs
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    # restart: unless-stopped
