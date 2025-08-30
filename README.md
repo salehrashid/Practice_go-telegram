@@ -15,7 +15,7 @@ This application uses **ProtonVPN** and **WireGuard** to securely send Telegram 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/salehrashid/go-telegram.git
+   git clone https://github.com/salehrashid/Practice_go-telegram.git
    cd go-telegram
    ```
 
