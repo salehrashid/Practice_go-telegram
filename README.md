@@ -16,17 +16,17 @@ This application uses **ProtonVPN** and **WireGuard** to securely send Telegram 
 
    ```bash
    git clone https://github.com/salehrashid/Practice_go-telegram.git
-   cd go-telegram
+   cd Practice_go-telegram
    ```
 
-2. **Copy and rename the environment file**
+2. **Copy and rename the environment file** \
    Start by copying the sample environment file:
 
    ```bash
    cp .env.sample .env
    ```
 
-3. **Update the environment variables**
+3. **Update the environment variables** \
    Open the newly created `.env` file and **replace all placeholder values** (such as `PRIVATE_KEY_PLACEHOLDER`) with your **actual keys**:
 
    ```
@@ -40,7 +40,7 @@ This application uses **ProtonVPN** and **WireGuard** to securely send Telegram 
    docker compose up --build
    ```
 
-5. **Verify the application**
+5. **Verify the application** \
    The app will automatically connect to **ProtonVPN** via **WireGuard** and start sending Telegram messages securely.
 
 ---
